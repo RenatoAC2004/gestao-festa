@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Convidados</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="mt-4 p-3 bg-primary text-white rounded text-center">
+			<h1>Lista de Convidados</h1>
+		</div>
+
+		<form method="post" action="/salvar" th:object="${convidado}">
+		<div><input type="hidden"  th:field="*{id}"></div>
+			<div class="row mt-4">
+				<div class="col">
+					<input type="text" class="form-control" th:errorclass="is-invalid" placeholder="RG" name="rg" th:field="*{rg}">
+					<div th:errors="*{rg}" class="invalid-feedback"></div>
+				</div>
+
+				<div class="col-6">
+					<input type="text" class="form-control" th:errorclass="is-invalid" placeholder="Nome acompanhante" name="nome" th:field="*{nome}">
+					<div th:errors="*{nome}" class="invalid-feedback"></div>
+				</div>
+
+				<div class="col">
+					<input type="number" class="form-control" th:errorclass="is-invalid" placeholder="Nº Acompanhantes" name="acompanhantes" th:field="*{acompanhantes}">
+					<div th:errors="*{acompanhantes}" class="invalid-feedback"></div>
+				</div>
+
+			</div>
+
+			<div class="text-center">
+				<button type="submit" class="btn btn-success mt-4">Salvar</button>
+			</div>
+
+		</form>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nº Rg</th>
+					<th>Nome acompanhante</th>
+					<th>Nº acompanhante</th>
+					<th>Ação</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each ="convidado: ${convidados}" >
+					<td th:text="${convidado.rg}" />
+					<td th:text="${convidado.nome}" />
+					<td th:text="${convidado.acompanhantes}" />
+					<td><a th:href="@{/excluir/{id}(id = ${convidado.id})}" class="btn btn-danger">Excluir</a></td>
+					<td><a th:href="@{/editar/{id}(id = ${convidado.id})}" class="btn btn-warning">Editar</a></td>
+				</tr>				
+			</tbody>
+		</table>
+	</div>
+	<script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
